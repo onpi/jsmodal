@@ -1,21 +1,37 @@
-function navMenu() {
-  const menuTrigger = document.getElementById('menuTrigger');
-  const menuWrap = document.getElementById('menuWrap');
-  if(menuTrigger.classList.contains('active') && menuWrap.classList.contains('open')) {
-    menuTrigger.classList.remove('active');
-    menuWrap.classList.remove('open');
-  }else {
-    menuTrigger.classList.add('active');
-    menuWrap.classList.add('open');
+// モーダル表示ボタンにid付与
+let modalBtn = document.querySelectorAll('.modal_btn');
+for (let i = 0; i < modalBtn.length; i++) {
+  modalBtn[i].setAttribute('id', 'modal'+i);
+}
+
+// モーダルにid付与
+let a = document.querySelectorAll('.modal_wrap');
+for (let i = 0; i < modalBtn.length; i++) {
+  modalBtn[i].setAttribute('id', 'modal'+i);
+}
+
+
+// モーダル開閉
+let modal = document.getElementById('modal');
+function modalOpen(e,id) {
+  let div = e.path[0];  
+  if(modal.classList.contains('open')) {
+    modal.classList.remove('open');
+  }else{
+    modal.classList.add('open');
+    document.getElementById('modalText').textContent = div.innerText;
   }
 }
-// ハンバーガメニュークリック
-document.getElementById('menuTrigger').addEventListener('click', navMenu);
-// 黒いマスククリックで閉じる
-document.querySelector('.overlay').addEventListener('click', navMenu);
-// ページ内スクロール時の処理
-let navItem = document.querySelectorAll('.nav_item');
-navItem.forEach(function(item){
-  item.addEventListener('click', navMenu);
+// モーダル表示ボタンクリックイベント
+modalBtn.forEach(function(item){
+  item.addEventListener('click', modalOpen);
 });
-
+// モーダル非表示
+function modalClose() {
+  modal.classList.remove('open');
+}
+// 閉じるボタン黒背景クリックでモーダル非表示
+let closeModal = document.querySelectorAll('.modalClose');
+closeModal.forEach(function(item){
+  item.addEventListener('click', modalClose);
+});
